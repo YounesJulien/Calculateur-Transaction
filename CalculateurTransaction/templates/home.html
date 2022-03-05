@@ -1,6 +1,25 @@
 {% extends "default.html" %}
 {% block content %}
-
-    <h1>Calculateur de Transactions</h1>
-
+    <div class="content-section">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th scope="col">Place</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+           {% for trans in data %}
+            <tr>
+              <th scope="row">{{ trans[0] }}</th>
+              <th scope="row">{{ trans[1] }}</th>
+              <th scope="row">{{ trans[2] }}</th>
+              <th scope="row">{{ trans[3] }}</th>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        </div>
 {% endblock %}

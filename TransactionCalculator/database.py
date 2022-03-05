@@ -26,3 +26,6 @@ class Database():
 
   def getTransactions(self):
     return self.execute("SELECT * FROM Trans ORDER BY TransDate DESC")
+
+  def getTransaction(self, id):
+    return self.execute("SELECT * FROM Trans WHERE id=" + id)[0]

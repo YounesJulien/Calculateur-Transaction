@@ -13,7 +13,7 @@
           <tbody>
            {% for trans in data %}
             <tr>
-              <th scope="row">{{ trans[0] }}</th>
+              <th scope="row"><a href="/transaction/{{ trans[0] }}">{{ trans[0] }}</a></th>
               <th scope="row">{{ trans[1] }}</th>
               <th scope="row">{{ trans[2] }}</th>
               <th scope="row">{{ trans[3] }}</th>

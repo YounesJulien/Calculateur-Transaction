@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Flask, render_template, request
 from database import Database
 
@@ -14,6 +13,15 @@ def page_not_found(error):
 def home():
     return render_template('home.html', data=db.getTransactions())
 
-@app.route('/transaction/<id>', methods = ['GET'])
+@app.route('/transaction/<id>', methods = ['GET', 'POST'])
 def display(id):
-    return render_template('transaction.html', data=db.getTransaction(id))
+    return render_template('transaction.html', data=db.getTransaction(id), dis=True)
+
+@app.route('/edit/<id>', methods = ['GET', 'POST'])
+def edit(id):
+    return render_template('transaction.html', data=db.getTransaction(id), dis=False)
+
+@app.route('/save/<id>', methods = ['GET', 'POST'])
+def save(id):
+    db.updateTransaction(id, request.form)
+    return render_template('home.html', data=db.getTransactions())

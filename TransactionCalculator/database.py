@@ -32,7 +32,7 @@ class Database():
     self.disconnect()
 
   def getTransactions(self):
-    return self.execute("SELECT * FROM Trans ORDER BY TransDate DESC")
+    return self.execute("SELECT * FROM Trans ORDER BY TransDate DESC, id DESC")
 
   def getTransaction(self, id):
     return self.execute("SELECT * FROM Trans WHERE id=" + id)[0]
@@ -41,3 +41,11 @@ class Database():
     self.update("UPDATE Trans SET TransDate='" 
       + form['date'] + "', PlaceName='" + form['place'] + "', Amount=" 
       + form['amount']+  " WHERE id=" + id)
+  
+  def newTransaction(self, id, form):
+    self.update("INSERT INTO Trans VALUES (" 
+      + id + ", '" + form['date'] + "', '" + form['place'] + "', " 
+      + form['amount'] + ")")
+
+  def getNewId(self):
+    return self.execute("SELECT MAX(id) From Trans")[0][0] + 1

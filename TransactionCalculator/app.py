@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 from flask import Flask, render_template, request
 from database import Database
 
@@ -13,15 +14,22 @@ def page_not_found(error):
 def home():
     return render_template('home.html', data=db.getTransactions())
 
-@app.route('/transaction/<id>', methods = ['GET', 'POST'])
+@app.route('/transaction/<id>', methods = ['GET'])
 def display(id):
     return render_template('transaction.html', data=db.getTransaction(id), dis=True)
 
-@app.route('/edit/<id>', methods = ['GET', 'POST'])
+@app.route('/edit/<id>', methods = ['POST'])
 def edit(id):
     return render_template('transaction.html', data=db.getTransaction(id), dis=False)
 
-@app.route('/save/<id>', methods = ['GET', 'POST'])
+@app.route('/save/<id>', methods = ['POST'])
 def save(id):
-    db.updateTransaction(id, request.form)
-    return render_template('home.html', data=db.getTransactions())
+    if int(id,base=10) == db.getNewId():
+        db.newTransaction(id, request.form)
+    else:
+        db.updateTransaction(id, request.form)
+    return render_template('transaction.html', data=db.getTransaction(id), dis=True)
+
+@app.route('/new', methods = ['GET'])
+def new():
+    return render_template('transaction.html', data=[db.getNewId(), '', '', 0], dis=False)

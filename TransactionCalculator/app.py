@@ -16,11 +16,11 @@ def home():
 
 @app.route('/transaction/<id>', methods = ['GET'])
 def display(id):
-    return render_template('transaction.html', data=db.getTransaction(id), dis=True)
+    return render_template('transaction.html', data=db.getTransaction(id), Options=db.getPlaceNames(), dis=True)
 
 @app.route('/edit/<id>', methods = ['POST'])
 def edit(id):
-    return render_template('transaction.html', data=db.getTransaction(id), dis=False)
+    return render_template('transaction.html', data=db.getTransaction(id), Options=db.getPlaceNames(), dis=False)
 
 @app.route('/save/<id>', methods = ['POST'])
 def save(id):
@@ -28,8 +28,8 @@ def save(id):
         db.newTransaction(id, request.form)
     else:
         db.updateTransaction(id, request.form)
-    return render_template('transaction.html', data=db.getTransaction(id), dis=True)
+    return render_template('transaction.html', data=db.getTransaction(id), Options=db.getPlaceNames(), dis=True)
 
 @app.route('/new', methods = ['GET'])
 def new():
-    return render_template('transaction.html', data=[db.getNewId(), '', '', 0], dis=False)
+    return render_template('transaction.html', data=[db.getNewId(), '', 0], Options=db.getPlaceNames(), dis=False)

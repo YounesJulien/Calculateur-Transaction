@@ -37,14 +37,17 @@ class Database():
   def getTransaction(self, id):
     return self.execute("SELECT * FROM Trans WHERE id=" + id)[0]
 
+  def getPlaceNames(self):
+    return [tuple[0] for tuple in self.execute("SELECT PlaceName FROM Place ORDER BY PlaceName ASC")]
+
   def updateTransaction(self, id, form):
     self.update("UPDATE Trans SET TransDate='" 
-      + form['date'] + "', PlaceName='" + form['place'] + "', Amount=" 
+      + form['date'] + "', PlaceName=\"" + form['place'] + "\", Amount=" 
       + form['amount']+  " WHERE id=" + id)
   
   def newTransaction(self, id, form):
     self.update("INSERT INTO Trans VALUES (" 
-      + id + ", '" + form['date'] + "', '" + form['place'] + "', " 
+      + id + ", '" + form['date'] + "', \"" + form['place'] + "\", " 
       + form['amount'] + ")")
 
   def getNewId(self):

@@ -1,4 +1,3 @@
-from contextlib import nullcontext
 from flask import Flask, render_template, request
 from database import Database
 
